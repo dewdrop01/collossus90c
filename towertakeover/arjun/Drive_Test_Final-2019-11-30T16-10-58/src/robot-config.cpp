@@ -75,11 +75,11 @@ int rc_auto_loop_callback_Controller1() {
     }
     // check the ButtonL1/ButtonL2 status to control LeftIntakeMotor
     if (Controller1.ButtonL1.pressing()) {
-      LeftIntakeMotor.spin(reverse);
+      LeftIntakeMotor.spin(forward);
       RightIntakeMotor.spin(forward);
       Controller1LeftShoulderControlMotorsStopped = false;
     } else if (Controller1.ButtonL2.pressing()) {
-      LeftIntakeMotor.spin(forward);
+      LeftIntakeMotor.spin(reverse);
       RightIntakeMotor.spin(reverse);
       Controller1LeftShoulderControlMotorsStopped = false;
     } else if (!Controller1LeftShoulderControlMotorsStopped) {
@@ -91,11 +91,11 @@ int rc_auto_loop_callback_Controller1() {
     // check the ButtonR1/ButtonR2 status to control RightIntakeMotor
     if (Controller1.ButtonR1.pressing()) {
       LeftArmMotor.spin(reverse);
-      RightArmMotor.spin(forward);
+      RightArmMotor.spin(reverse);
       Controller1RightShoulderControlMotorsStopped = false;
     } else if (Controller1.ButtonR2.pressing()) {
       LeftArmMotor.spin(forward);
-      RightArmMotor.spin(reverse);
+      RightArmMotor.spin(forward);
       Controller1RightShoulderControlMotorsStopped = false;
     } else if (!Controller1RightShoulderControlMotorsStopped) {
       LeftArmMotor.stop();
@@ -104,17 +104,7 @@ int rc_auto_loop_callback_Controller1() {
       Controller1RightShoulderControlMotorsStopped = true;
     }
     // check the Up/Down Buttons status to control LeftArmMotor
-    if (Controller1.ButtonUp.pressing()) {
-      LeftArmMotor.spin(forward);
-      Controller1UpDownButtonsControlMotorsStopped = false;
-    } else if (Controller1.ButtonDown.pressing()) {
-      LeftArmMotor.spin(reverse);
-      Controller1UpDownButtonsControlMotorsStopped = false;
-    } else if (!Controller1UpDownButtonsControlMotorsStopped){
-      LeftArmMotor.stop();
-      // set the toggle so that we don't constantly tell the motor to stop when the buttons are released
-      Controller1UpDownButtonsControlMotorsStopped = true;
-    }
+    
     // check the X/B buttons status to control RightArmMotor
     if (Controller1.ButtonX.pressing()) {
       RampMotor.spin(reverse);
@@ -123,9 +113,10 @@ int rc_auto_loop_callback_Controller1() {
       RampMotor.spin(forward);
       Controller1XBButtonsControlMotorsStopped = false;
     } else if (!Controller1XBButtonsControlMotorsStopped){
-      RightArmMotor.stop();
+      RampMotor.stop();
       Controller1XBButtonsControlMotorsStopped = true;
     }
+    
     // wait before repeating the process
     wait(20, msec);
   }
